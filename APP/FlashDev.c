@@ -14,6 +14,6 @@ struct FlashDevice const FlashDevice  =  {
 	2000,                      	// Erase Sector Timeout 2000 mSec
 
 // Specify Size and Address of Sectors
-	0x10000, 0x000000,           // Sector Size 64KB
+	0x20000, 0x000000,           // Sector Size 128KB
 	SECTOR_END
 };

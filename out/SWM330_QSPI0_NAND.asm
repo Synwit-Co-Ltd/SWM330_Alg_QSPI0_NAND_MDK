@@ -30,15 +30,15 @@
     Program header entries: 2
     Section header entries: 17
 
-    Program header offset: 49348 (0x0000c0c4)
-    Section header offset: 49412 (0x0000c104)
+    Program header offset: 50344 (0x0000c4a8)
+    Section header offset: 50408 (0x0000c4e8)
 
     Section header string table index: 16
 
 ========================================================================
 
 ** Program header #0 (PT_LOAD) [PF_X + PF_W + PF_R + PF_ARM_SB + PF_ARM_PI]
-    Size : 7608 bytes (5556 bytes in file)
+    Size : 7644 bytes (5592 bytes in file)
     Virtual address: 0x00000000 (Alignment 4)
 
 
@@ -46,19 +46,19 @@
 
 ** Program header #1 (PT_LOAD) [PF_X + PF_R + PF_ARM_PI]
     Size : 4256 bytes
-    Virtual address: 0x000015b4 (Alignment 4)
+    Virtual address: 0x000015d8 (Alignment 4)
 
 
 ========================================================================
 
 ** Section #1 'PrgCode' (SHT_PROGBITS) [SHF_ALLOC + SHF_EXECINSTR]
-    Size   : 5544 bytes (alignment 4)
+    Size   : 5580 bytes (alignment 4)
     Address: 0x00000000
 
     $t.0
     Init
         0x00000000:    2a01        .*      CMP      r2,#1
-        0x00000002:    d11f        ..      BNE      0x44 ; Init + 68
+        0x00000002:    d122        ".      BNE      0x4a ; Init + 74
         0x00000004:    b580        ..      PUSH     {r7,lr}
         0x00000006:    f3ef8010    ....    MRS      r0,PRIMASK
         0x0000000a:    b672        r.      CPSID    i
@@ -79,302 +79,306 @@
         0x00000034:    6081        .`      STR      r1,[r0,#8]
         0x00000036:    6001        .`      STR      r1,[r0,#0]
         0x00000038:    f001f8cc    ....    BL       SystemInit ; 0x11d4
-        0x0000003c:    f000f88a    ....    BL       W25N01G_Init ; 0x154
-        0x00000040:    e8bd4080    ...@    POP      {r7,lr}
-        0x00000044:    2000        .       MOVS     r0,#0
-        0x00000046:    4770        pG      BX       lr
+        0x0000003c:    f000f88c    ....    BL       W25N01G_Init ; 0x158
+        0x00000040:    2000        .       MOVS     r0,#0
+        0x00000042:    f000fad5    ....    BL       W25N01G_FlashProtect ; 0x5f0
+        0x00000046:    e8bd4080    ...@    POP      {r7,lr}
+        0x0000004a:    2000        .       MOVS     r0,#0
+        0x0000004c:    4770        pG      BX       lr
+        0x0000004e:    bf00        ..      NOP      
     UnInit
-        0x00000048:    2000        .       MOVS     r0,#0
-        0x0000004a:    4770        pG      BX       lr
+        0x00000050:    2000        .       MOVS     r0,#0
+        0x00000052:    4770        pG      BX       lr
     EraseSector
-        0x0000004c:    f1004110    ...A    ADD      r1,r0,#0x90000000
-        0x00000050:    f1b16f00    ...o    CMP      r1,#0x8000000
-        0x00000054:    bf84        ..      ITT      HI
-        0x00000056:    2001        .       MOVHI    r0,#1
-        0x00000058:    4770        pG      BXHI     lr
-        0x0000005a:    b580        ..      PUSH     {r7,lr}
-        0x0000005c:    f04f5100    O..Q    MOV      r1,#0x20000000
-        0x00000060:    eb010040    ..@.    ADD      r0,r1,r0,LSL #1
-        0x00000064:    2101        .!      MOVS     r1,#1
-        0x00000066:    f000f955    ..U.    BL       W25N01G_Erase ; 0x314
-        0x0000006a:    2000        .       MOVS     r0,#0
-        0x0000006c:    bd80        ..      POP      {r7,pc}
-        0x0000006e:    bf00        ..      NOP      
+        0x00000054:    f1004010    ...@    ADD      r0,r0,#0x90000000
+        0x00000058:    f1b06f00    ...o    CMP      r0,#0x8000000
+        0x0000005c:    bf84        ..      ITT      HI
+        0x0000005e:    2001        .       MOVHI    r0,#1
+        0x00000060:    4770        pG      BXHI     lr
+        0x00000062:    b580        ..      PUSH     {r7,lr}
+        0x00000064:    0ac0        ..      LSRS     r0,r0,#11
+        0x00000066:    2101        .!      MOVS     r1,#1
+        0x00000068:    f000f956    ..V.    BL       W25N01G_Erase ; 0x318
+        0x0000006c:    2000        .       MOVS     r0,#0
+        0x0000006e:    bd80        ..      POP      {r7,pc}
     ProgramPage
-        0x00000070:    f1004110    ...A    ADD      r1,r0,#0x90000000
-        0x00000074:    f1b16f00    ...o    CMP      r1,#0x8000000
-        0x00000078:    bf84        ..      ITT      HI
-        0x0000007a:    2001        .       MOVHI    r0,#1
-        0x0000007c:    4770        pG      BXHI     lr
-        0x0000007e:    b580        ..      PUSH     {r7,lr}
-        0x00000080:    f04f5100    O..Q    MOV      r1,#0x20000000
-        0x00000084:    eb010040    ..@.    ADD      r0,r1,r0,LSL #1
-        0x00000088:    4611        .F      MOV      r1,r2
-        0x0000008a:    2204        ."      MOVS     r2,#4
-        0x0000008c:    2301        .#      MOVS     r3,#1
-        0x0000008e:    f000f987    ....    BL       W25N01G_Write_ ; 0x3a0
-        0x00000092:    2000        .       MOVS     r0,#0
-        0x00000094:    bd80        ..      POP      {r7,pc}
-        0x00000096:    bf00        ..      NOP      
+        0x00000070:    b5b0        ..      PUSH     {r4,r5,r7,lr}
+        0x00000072:    f1004510    ...E    ADD      r5,r0,#0x90000000
+        0x00000076:    f1b56f00    ...o    CMP      r5,#0x8000000
+        0x0000007a:    bf84        ..      ITT      HI
+        0x0000007c:    2001        .       MOVHI    r0,#1
+        0x0000007e:    bdb0        ..      POPHI    {r4,r5,r7,pc}
+        0x00000080:    4614        .F      MOV      r4,r2
+        0x00000082:    f5b16f00    ...o    CMP      r1,#0x800
+        0x00000086:    da05        ..      BGE      0x94 ; ProgramPage + 36
+        0x00000088:    1860        `.      ADDS     r0,r4,r1
+        0x0000008a:    f5c16100    ...a    RSB      r1,r1,#0x800
+        0x0000008e:    22ff        ."      MOVS     r2,#0xff
+        0x00000090:    f001fa7f    ....    BL       __aeabi_memset ; 0x1592
+        0x00000094:    0ae8        ..      LSRS     r0,r5,#11
+        0x00000096:    4621        !F      MOV      r1,r4
+        0x00000098:    2204        ."      MOVS     r2,#4
+        0x0000009a:    2301        .#      MOVS     r3,#1
+        0x0000009c:    f000f982    ....    BL       W25N01G_Write_ ; 0x3a4
+        0x000000a0:    2000        .       MOVS     r0,#0
+        0x000000a2:    bdb0        ..      POP      {r4,r5,r7,pc}
     Verify
-        0x00000098:    b5f0        ..      PUSH     {r4-r7,lr}
-        0x0000009a:    b081        ..      SUB      sp,sp,#4
-        0x0000009c:    4604        .F      MOV      r4,r0
-        0x0000009e:    f1004010    ...@    ADD      r0,r0,#0x90000000
-        0x000000a2:    f1b06f00    ...o    CMP      r0,#0x8000000
-        0x000000a6:    bf82        ..      ITTT     HI
-        0x000000a8:    4620         F      MOVHI    r0,r4
-        0x000000aa:    b001        ..      ADDHI    sp,sp,#4
-        0x000000ac:    bdf0        ..      POPHI    {r4-r7,pc}
-        0x000000ae:    f04f5000    O..P    MOV      r0,#0x20000000
-        0x000000b2:    f240070d    @...    MOVW     r7,#0xd
-        0x000000b6:    eb000044    ..D.    ADD      r0,r0,r4,LSL #1
-        0x000000ba:    f2c00700    ....    MOVT     r7,#0
-        0x000000be:    4616        .F      MOV      r6,r2
-        0x000000c0:    460d        .F      MOV      r5,r1
-        0x000000c2:    f04f0c01    O...    MOV      r12,#1
-        0x000000c6:    eb090107    ....    ADD      r1,r9,r7
-        0x000000ca:    2201        ."      MOVS     r2,#1
-        0x000000cc:    2304        .#      MOVS     r3,#4
-        0x000000ce:    f8cdc000    ....    STR      r12,[sp,#0]
-        0x000000d2:    f000f9f3    ....    BL       W25N01G_Read_ ; 0x4bc
-        0x000000d6:    2d00        .-      CMP      r5,#0
-        0x000000d8:    4629        )F      MOV      r1,r5
-        0x000000da:    bf18        ..      IT       NE
-        0x000000dc:    2101        .!      MOVNE    r1,#1
-        0x000000de:    d018        ..      BEQ      0x112 ; Verify + 122
-        0x000000e0:    f8190007    ....    LDRB     r0,[r9,r7]
-        0x000000e4:    7832        2x      LDRB     r2,[r6,#0]
-        0x000000e6:    4290        .B      CMP      r0,r2
-        0x000000e8:    f04f0000    O...    MOV      r0,#0
-        0x000000ec:    d10f        ..      BNE      0x10e ; Verify + 118
-        0x000000ee:    2001        .       MOVS     r0,#1
-        0x000000f0:    42a8        .B      CMP      r0,r5
-        0x000000f2:    f04f0100    O...    MOV      r1,#0
-        0x000000f6:    bf38        8.      IT       CC
-        0x000000f8:    2101        .!      MOVCC    r1,#1
-        0x000000fa:    4285        .B      CMP      r5,r0
-        0x000000fc:    d00a        ..      BEQ      0x114 ; Verify + 124
-        0x000000fe:    eb090207    ....    ADD      r2,r9,r7
-        0x00000102:    5c12        .\      LDRB     r2,[r2,r0]
-        0x00000104:    5c33        3\      LDRB     r3,[r6,r0]
-        0x00000106:    3001        .0      ADDS     r0,#1
-        0x00000108:    429a        .B      CMP      r2,r3
-        0x0000010a:    d0f1        ..      BEQ      0xf0 ; Verify + 88
-        0x0000010c:    3801        .8      SUBS     r0,#1
-        0x0000010e:    4420         D      ADD      r0,r0,r4
-        0x00000110:    e000        ..      B        0x114 ; Verify + 124
-        0x00000112:    e7ff        ..      B        0x114 ; Verify + 124
-        0x00000114:    2900        .)      CMP      r1,#0
-        0x00000116:    bf08        ..      IT       EQ
-        0x00000118:    1928        (.      ADDEQ    r0,r5,r4
-        0x0000011a:    b001        ..      ADD      sp,sp,#4
-        0x0000011c:    bdf0        ..      POP      {r4-r7,pc}
-        0x0000011e:    bf00        ..      NOP      
+        0x000000a4:    b5f0        ..      PUSH     {r4-r7,lr}
+        0x000000a6:    b081        ..      SUB      sp,sp,#4
+        0x000000a8:    4604        .F      MOV      r4,r0
+        0x000000aa:    f1004010    ...@    ADD      r0,r0,#0x90000000
+        0x000000ae:    f1b06f00    ...o    CMP      r0,#0x8000000
+        0x000000b2:    bf82        ..      ITTT     HI
+        0x000000b4:    4620         F      MOVHI    r0,r4
+        0x000000b6:    b001        ..      ADDHI    sp,sp,#4
+        0x000000b8:    bdf0        ..      POPHI    {r4-r7,pc}
+        0x000000ba:    f240070d    @...    MOVW     r7,#0xd
+        0x000000be:    f2c00700    ....    MOVT     r7,#0
+        0x000000c2:    4616        .F      MOV      r6,r2
+        0x000000c4:    460d        .F      MOV      r5,r1
+        0x000000c6:    0ac0        ..      LSRS     r0,r0,#11
+        0x000000c8:    f04f0c01    O...    MOV      r12,#1
+        0x000000cc:    eb090107    ....    ADD      r1,r9,r7
+        0x000000d0:    2201        ."      MOVS     r2,#1
+        0x000000d2:    2304        .#      MOVS     r3,#4
+        0x000000d4:    f8cdc000    ....    STR      r12,[sp,#0]
+        0x000000d8:    f000f9f0    ....    BL       W25N01G_Read_ ; 0x4bc
+        0x000000dc:    2d00        .-      CMP      r5,#0
+        0x000000de:    4629        )F      MOV      r1,r5
+        0x000000e0:    bf18        ..      IT       NE
+        0x000000e2:    2101        .!      MOVNE    r1,#1
+        0x000000e4:    d019        ..      BEQ      0x11a ; Verify + 118
+        0x000000e6:    f8190007    ....    LDRB     r0,[r9,r7]
+        0x000000ea:    7832        2x      LDRB     r2,[r6,#0]
+        0x000000ec:    4290        .B      CMP      r0,r2
+        0x000000ee:    f04f0000    O...    MOV      r0,#0
+        0x000000f2:    d110        ..      BNE      0x116 ; Verify + 114
+        0x000000f4:    2001        .       MOVS     r0,#1
+        0x000000f6:    bf00        ..      NOP      
+        0x000000f8:    42a8        .B      CMP      r0,r5
+        0x000000fa:    f04f0100    O...    MOV      r1,#0
+        0x000000fe:    bf38        8.      IT       CC
+        0x00000100:    2101        .!      MOVCC    r1,#1
+        0x00000102:    4285        .B      CMP      r5,r0
+        0x00000104:    d00a        ..      BEQ      0x11c ; Verify + 120
+        0x00000106:    eb090207    ....    ADD      r2,r9,r7
+        0x0000010a:    5c12        .\      LDRB     r2,[r2,r0]
+        0x0000010c:    5c33        3\      LDRB     r3,[r6,r0]
+        0x0000010e:    3001        .0      ADDS     r0,#1
+        0x00000110:    429a        .B      CMP      r2,r3
+        0x00000112:    d0f1        ..      BEQ      0xf8 ; Verify + 84
+        0x00000114:    3801        .8      SUBS     r0,#1
+        0x00000116:    4420         D      ADD      r0,r0,r4
+        0x00000118:    e000        ..      B        0x11c ; Verify + 120
+        0x0000011a:    e7ff        ..      B        0x11c ; Verify + 120
+        0x0000011c:    2900        .)      CMP      r1,#0
+        0x0000011e:    bf08        ..      IT       EQ
+        0x00000120:    1928        (.      ADDEQ    r0,r5,r4
+        0x00000122:    b001        ..      ADD      sp,sp,#4
+        0x00000124:    bdf0        ..      POP      {r4-r7,pc}
+        0x00000126:    bf00        ..      NOP      
     Read
-        0x00000120:    b5b0        ..      PUSH     {r4,r5,r7,lr}
-        0x00000122:    b082        ..      SUB      sp,sp,#8
-        0x00000124:    4604        .F      MOV      r4,r0
-        0x00000126:    f1004010    ...@    ADD      r0,r0,#0x90000000
-        0x0000012a:    f1b06f00    ...o    CMP      r0,#0x8000000
-        0x0000012e:    d80e        ..      BHI      0x14e ; Read + 46
-        0x00000130:    f04f5000    O..P    MOV      r0,#0x20000000
-        0x00000134:    eb000044    ..D.    ADD      r0,r0,r4,LSL #1
+        0x00000128:    b5b0        ..      PUSH     {r4,r5,r7,lr}
+        0x0000012a:    b082        ..      SUB      sp,sp,#8
+        0x0000012c:    4604        .F      MOV      r4,r0
+        0x0000012e:    f1004010    ...@    ADD      r0,r0,#0x90000000
+        0x00000132:    f1b06f00    ...o    CMP      r0,#0x8000000
+        0x00000136:    d80b        ..      BHI      0x150 ; Read + 40
         0x00000138:    460d        .F      MOV      r5,r1
-        0x0000013a:    f04f0c01    O...    MOV      r12,#1
-        0x0000013e:    4611        .F      MOV      r1,r2
-        0x00000140:    2201        ."      MOVS     r2,#1
-        0x00000142:    2304        .#      MOVS     r3,#4
-        0x00000144:    f8cdc000    ....    STR      r12,[sp,#0]
-        0x00000148:    f000f9b8    ....    BL       W25N01G_Read_ ; 0x4bc
-        0x0000014c:    442c        ,D      ADD      r4,r4,r5
-        0x0000014e:    4620         F      MOV      r0,r4
-        0x00000150:    b002        ..      ADD      sp,sp,#8
-        0x00000152:    bdb0        ..      POP      {r4,r5,r7,pc}
+        0x0000013a:    0ac0        ..      LSRS     r0,r0,#11
+        0x0000013c:    f04f0c01    O...    MOV      r12,#1
+        0x00000140:    4611        .F      MOV      r1,r2
+        0x00000142:    2201        ."      MOVS     r2,#1
+        0x00000144:    2304        .#      MOVS     r3,#4
+        0x00000146:    f8cdc000    ....    STR      r12,[sp,#0]
+        0x0000014a:    f000f9b7    ....    BL       W25N01G_Read_ ; 0x4bc
+        0x0000014e:    442c        ,D      ADD      r4,r4,r5
+        0x00000150:    4620         F      MOV      r0,r4
+        0x00000152:    b002        ..      ADD      sp,sp,#8
+        0x00000154:    bdb0        ..      POP      {r4,r5,r7,pc}
+        0x00000156:    0000        ..      MOVS     r0,r0
     W25N01G_Init
-        0x00000154:    b570        p.      PUSH     {r4-r6,lr}
-        0x00000156:    b082        ..      SUB      sp,sp,#8
-        0x00000158:    2410        .$      MOVS     r4,#0x10
-        0x0000015a:    f2c4040a    ....    MOVT     r4,#0x400a
-        0x0000015e:    4620         F      MOV      r0,r4
-        0x00000160:    2105        .!      MOVS     r1,#5
-        0x00000162:    2202        ."      MOVS     r2,#2
-        0x00000164:    2300        .#      MOVS     r3,#0
-        0x00000166:    2500        .%      MOVS     r5,#0
-        0x00000168:    f000fa5c    ..\.    BL       PORT_Init ; 0x624
-        0x0000016c:    4620         F      MOV      r0,r4
-        0x0000016e:    2104        .!      MOVS     r1,#4
-        0x00000170:    2202        ."      MOVS     r2,#2
-        0x00000172:    2300        .#      MOVS     r3,#0
-        0x00000174:    f000fa56    ..V.    BL       PORT_Init ; 0x624
-        0x00000178:    4620         F      MOV      r0,r4
-        0x0000017a:    2103        .!      MOVS     r1,#3
-        0x0000017c:    2202        ."      MOVS     r2,#2
-        0x0000017e:    2301        .#      MOVS     r3,#1
-        0x00000180:    2601        .&      MOVS     r6,#1
-        0x00000182:    f000fa4f    ..O.    BL       PORT_Init ; 0x624
-        0x00000186:    4620         F      MOV      r0,r4
-        0x00000188:    2102        .!      MOVS     r1,#2
-        0x0000018a:    2202        ."      MOVS     r2,#2
-        0x0000018c:    2301        .#      MOVS     r3,#1
-        0x0000018e:    f000fa49    ..I.    BL       PORT_Init ; 0x624
-        0x00000192:    4620         F      MOV      r0,r4
-        0x00000194:    2101        .!      MOVS     r1,#1
-        0x00000196:    2202        ."      MOVS     r2,#2
-        0x00000198:    2301        .#      MOVS     r3,#1
-        0x0000019a:    f000fa43    ..C.    BL       PORT_Init ; 0x624
-        0x0000019e:    4620         F      MOV      r0,r4
-        0x000001a0:    2100        .!      MOVS     r1,#0
-        0x000001a2:    2202        ."      MOVS     r2,#2
-        0x000001a4:    2301        .#      MOVS     r3,#1
-        0x000001a6:    f000fa3d    ..=.    BL       PORT_Init ; 0x624
-        0x000001aa:    f8d40100    ....    LDR      r0,[r4,#0x100]
-        0x000001ae:    4669        iF      MOV      r1,sp
-        0x000001b0:    f0400001    @...    ORR      r0,r0,#1
-        0x000001b4:    f8c40100    ....    STR      r0,[r4,#0x100]
-        0x000001b8:    201a        .       MOVS     r0,#0x1a
-        0x000001ba:    f2c00003    ....    MOVT     r0,#3
-        0x000001be:    9000        ..      STR      r0,[sp,#0]
-        0x000001c0:    f04f40f0    O..@    MOV      r0,#0x78000000
-        0x000001c4:    f8ad6004    ...`    STRH     r6,[sp,#4]
-        0x000001c8:    f88d5006    ...P    STRB     r5,[sp,#6]
-        0x000001cc:    f000fb68    ..h.    BL       QSPI_Init ; 0x8a0
-        0x000001d0:    f04f40f0    O..@    MOV      r0,#0x78000000
-        0x000001d4:    f000fbc6    ....    BL       QSPI_Open ; 0x964
-        0x000001d8:    20b0        .       MOVS     r0,#0xb0
-        0x000001da:    f000f807    ....    BL       W25N01G_ReadReg ; 0x1ec
-        0x000001de:    f0400108    @...    ORR      r1,r0,#8
-        0x000001e2:    20b0        .       MOVS     r0,#0xb0
-        0x000001e4:    f000f82e    ....    BL       W25N01G_WriteReg ; 0x244
-        0x000001e8:    b002        ..      ADD      sp,sp,#8
-        0x000001ea:    bd70        p.      POP      {r4-r6,pc}
+        0x00000158:    b570        p.      PUSH     {r4-r6,lr}
+        0x0000015a:    b082        ..      SUB      sp,sp,#8
+        0x0000015c:    2410        .$      MOVS     r4,#0x10
+        0x0000015e:    f2c4040a    ....    MOVT     r4,#0x400a
+        0x00000162:    4620         F      MOV      r0,r4
+        0x00000164:    2105        .!      MOVS     r1,#5
+        0x00000166:    2202        ."      MOVS     r2,#2
+        0x00000168:    2300        .#      MOVS     r3,#0
+        0x0000016a:    2500        .%      MOVS     r5,#0
+        0x0000016c:    f000fa5a    ..Z.    BL       PORT_Init ; 0x624
+        0x00000170:    4620         F      MOV      r0,r4
+        0x00000172:    2104        .!      MOVS     r1,#4
+        0x00000174:    2202        ."      MOVS     r2,#2
+        0x00000176:    2300        .#      MOVS     r3,#0
+        0x00000178:    f000fa54    ..T.    BL       PORT_Init ; 0x624
+        0x0000017c:    4620         F      MOV      r0,r4
+        0x0000017e:    2103        .!      MOVS     r1,#3
+        0x00000180:    2202        ."      MOVS     r2,#2
+        0x00000182:    2301        .#      MOVS     r3,#1
+        0x00000184:    2601        .&      MOVS     r6,#1
+        0x00000186:    f000fa4d    ..M.    BL       PORT_Init ; 0x624
+        0x0000018a:    4620         F      MOV      r0,r4
+        0x0000018c:    2102        .!      MOVS     r1,#2
+        0x0000018e:    2202        ."      MOVS     r2,#2
+        0x00000190:    2301        .#      MOVS     r3,#1
+        0x00000192:    f000fa47    ..G.    BL       PORT_Init ; 0x624
+        0x00000196:    4620         F      MOV      r0,r4
+        0x00000198:    2101        .!      MOVS     r1,#1
+        0x0000019a:    2202        ."      MOVS     r2,#2
+        0x0000019c:    2301        .#      MOVS     r3,#1
+        0x0000019e:    f000fa41    ..A.    BL       PORT_Init ; 0x624
+        0x000001a2:    4620         F      MOV      r0,r4
+        0x000001a4:    2100        .!      MOVS     r1,#0
+        0x000001a6:    2202        ."      MOVS     r2,#2
+        0x000001a8:    2301        .#      MOVS     r3,#1
+        0x000001aa:    f000fa3b    ..;.    BL       PORT_Init ; 0x624
+        0x000001ae:    f8d40100    ....    LDR      r0,[r4,#0x100]
+        0x000001b2:    4669        iF      MOV      r1,sp
+        0x000001b4:    f0400001    @...    ORR      r0,r0,#1
+        0x000001b8:    f8c40100    ....    STR      r0,[r4,#0x100]
+        0x000001bc:    201a        .       MOVS     r0,#0x1a
+        0x000001be:    f2c00004    ....    MOVT     r0,#4
+        0x000001c2:    9000        ..      STR      r0,[sp,#0]
+        0x000001c4:    f04f40f0    O..@    MOV      r0,#0x78000000
+        0x000001c8:    f8ad6004    ...`    STRH     r6,[sp,#4]
+        0x000001cc:    f88d5006    ...P    STRB     r5,[sp,#6]
+        0x000001d0:    f000fb66    ..f.    BL       QSPI_Init ; 0x8a0
+        0x000001d4:    f04f40f0    O..@    MOV      r0,#0x78000000
+        0x000001d8:    f000fbc4    ....    BL       QSPI_Open ; 0x964
+        0x000001dc:    20b0        .       MOVS     r0,#0xb0
+        0x000001de:    f000f807    ....    BL       W25N01G_ReadReg ; 0x1f0
+        0x000001e2:    f0400108    @...    ORR      r1,r0,#8
+        0x000001e6:    20b0        .       MOVS     r0,#0xb0
+        0x000001e8:    f000f82e    ....    BL       W25N01G_WriteReg ; 0x248
+        0x000001ec:    b002        ..      ADD      sp,sp,#8
+        0x000001ee:    bd70        p.      POP      {r4-r6,pc}
     W25N01G_ReadReg
-        0x000001ec:    b5b0        ..      PUSH     {r4,r5,r7,lr}
-        0x000001ee:    b088        ..      SUB      sp,sp,#0x20
-        0x000001f0:    ad01        ..      ADD      r5,sp,#4
-        0x000001f2:    4604        .F      MOV      r4,r0
-        0x000001f4:    4628        (F      MOV      r0,r5
-        0x000001f6:    f000fbbb    ....    BL       QSPI_CmdStructClear ; 0x970
-        0x000001fa:    f2401005    @...    MOV      r0,#0x105
-        0x000001fe:    2100        .!      MOVS     r1,#0
-        0x00000200:    f8ad0004    ....    STRH     r0,[sp,#4]
-        0x00000204:    2001        .       MOVS     r0,#1
-        0x00000206:    f88d1014    ....    STRB     r1,[sp,#0x14]
-        0x0000020a:    f44f7180    O..q    MOV      r1,#0x100
-        0x0000020e:    f8ad000c    ....    STRH     r0,[sp,#0xc]
-        0x00000212:    f8ad1016    ....    STRH     r1,[sp,#0x16]
-        0x00000216:    9006        ..      STR      r0,[sp,#0x18]
-        0x00000218:    f04f40f0    O..@    MOV      r0,#0x78000000
-        0x0000021c:    2101        .!      MOVS     r1,#1
-        0x0000021e:    462a        *F      MOV      r2,r5
-        0x00000220:    9402        ..      STR      r4,[sp,#8]
-        0x00000222:    f000fbaf    ....    BL       QSPI_Command ; 0x984
-        0x00000226:    f000f9f5    ....    BL       QSPI_FIFOEmpty ; 0x614
-        0x0000022a:    b120         .      CBZ      r0,0x236 ; W25N01G_ReadReg + 74
-        0x0000022c:    bf00        ..      NOP      
-        0x0000022e:    f000f9f1    ....    BL       QSPI_FIFOEmpty ; 0x614
-        0x00000232:    2800        .(      CMP      r0,#0
-        0x00000234:    d1fa        ..      BNE      0x22c ; W25N01G_ReadReg + 64
-        0x00000236:    2020                MOVS     r0,#0x20
-        0x00000238:    f6c70000    ....    MOVT     r0,#0x7800
-        0x0000023c:    7800        .x      LDRB     r0,[r0,#0]
-        0x0000023e:    b008        ..      ADD      sp,sp,#0x20
-        0x00000240:    bdb0        ..      POP      {r4,r5,r7,pc}
-        0x00000242:    bf00        ..      NOP      
+        0x000001f0:    b5b0        ..      PUSH     {r4,r5,r7,lr}
+        0x000001f2:    b088        ..      SUB      sp,sp,#0x20
+        0x000001f4:    ad01        ..      ADD      r5,sp,#4
+        0x000001f6:    4604        .F      MOV      r4,r0
+        0x000001f8:    4628        (F      MOV      r0,r5
+        0x000001fa:    f000fbb9    ....    BL       QSPI_CmdStructClear ; 0x970
+        0x000001fe:    f2401005    @...    MOV      r0,#0x105
+        0x00000202:    2100        .!      MOVS     r1,#0
+        0x00000204:    f8ad0004    ....    STRH     r0,[sp,#4]
+        0x00000208:    2001        .       MOVS     r0,#1
+        0x0000020a:    f88d1014    ....    STRB     r1,[sp,#0x14]
+        0x0000020e:    f44f7180    O..q    MOV      r1,#0x100
+        0x00000212:    f8ad000c    ....    STRH     r0,[sp,#0xc]
+        0x00000216:    f8ad1016    ....    STRH     r1,[sp,#0x16]
+        0x0000021a:    9006        ..      STR      r0,[sp,#0x18]
+        0x0000021c:    f04f40f0    O..@    MOV      r0,#0x78000000
+        0x00000220:    2101        .!      MOVS     r1,#1
+        0x00000222:    462a        *F      MOV      r2,r5
+        0x00000224:    9402        ..      STR      r4,[sp,#8]
+        0x00000226:    f000fbad    ....    BL       QSPI_Command ; 0x984
+        0x0000022a:    f000f9f3    ....    BL       QSPI_FIFOEmpty ; 0x614
+        0x0000022e:    b120         .      CBZ      r0,0x23a ; W25N01G_ReadReg + 74
+        0x00000230:    bf00        ..      NOP      
+        0x00000232:    f000f9ef    ....    BL       QSPI_FIFOEmpty ; 0x614
+        0x00000236:    2800        .(      CMP      r0,#0
+        0x00000238:    d1fa        ..      BNE      0x230 ; W25N01G_ReadReg + 64
+        0x0000023a:    2020                MOVS     r0,#0x20
+        0x0000023c:    f6c70000    ....    MOVT     r0,#0x7800
+        0x00000240:    7800        .x      LDRB     r0,[r0,#0]
+        0x00000242:    b008        ..      ADD      sp,sp,#0x20
+        0x00000244:    bdb0        ..      POP      {r4,r5,r7,pc}
+        0x00000246:    bf00        ..      NOP      
     W25N01G_WriteReg
-        0x00000244:    b570        p.      PUSH     {r4-r6,lr}
-        0x00000246:    b088        ..      SUB      sp,sp,#0x20
-        0x00000248:    ae01        ..      ADD      r6,sp,#4
-        0x0000024a:    4605        .F      MOV      r5,r0
-        0x0000024c:    4630        0F      MOV      r0,r6
-        0x0000024e:    460c        .F      MOV      r4,r1
-        0x00000250:    f000fb8e    ....    BL       QSPI_CmdStructClear ; 0x970
-        0x00000254:    f2401001    @...    MOV      r0,#0x101
-        0x00000258:    2100        .!      MOVS     r1,#0
-        0x0000025a:    f8ad0004    ....    STRH     r0,[sp,#4]
-        0x0000025e:    2001        .       MOVS     r0,#1
-        0x00000260:    f88d1014    ....    STRB     r1,[sp,#0x14]
-        0x00000264:    f44f7180    O..q    MOV      r1,#0x100
-        0x00000268:    f8ad000c    ....    STRH     r0,[sp,#0xc]
-        0x0000026c:    f8ad1016    ....    STRH     r1,[sp,#0x16]
-        0x00000270:    9006        ..      STR      r0,[sp,#0x18]
-        0x00000272:    f04f40f0    O..@    MOV      r0,#0x78000000
-        0x00000276:    2100        .!      MOVS     r1,#0
-        0x00000278:    4632        2F      MOV      r2,r6
-        0x0000027a:    9502        ..      STR      r5,[sp,#8]
-        0x0000027c:    f000fb82    ....    BL       QSPI_Command ; 0x984
-        0x00000280:    2020                MOVS     r0,#0x20
-        0x00000282:    f6c70000    ....    MOVT     r0,#0x7800
-        0x00000286:    7004        .p      STRB     r4,[r0,#0]
-        0x00000288:    f000f87a    ..z.    BL       QSPI_Busy ; 0x380
-        0x0000028c:    b128        (.      CBZ      r0,0x29a ; W25N01G_WriteReg + 86
-        0x0000028e:    bf00        ..      NOP      
-        0x00000290:    bf00        ..      NOP      
-        0x00000292:    f000f875    ..u.    BL       QSPI_Busy ; 0x380
-        0x00000296:    2800        .(      CMP      r0,#0
-        0x00000298:    d1fa        ..      BNE      0x290 ; W25N01G_WriteReg + 76
-        0x0000029a:    b008        ..      ADD      sp,sp,#0x20
-        0x0000029c:    bd70        p.      POP      {r4-r6,pc}
-        0x0000029e:    bf00        ..      NOP      
+        0x00000248:    b570        p.      PUSH     {r4-r6,lr}
+        0x0000024a:    b088        ..      SUB      sp,sp,#0x20
+        0x0000024c:    ae01        ..      ADD      r6,sp,#4
+        0x0000024e:    4605        .F      MOV      r5,r0
+        0x00000250:    4630        0F      MOV      r0,r6
+        0x00000252:    460c        .F      MOV      r4,r1
+        0x00000254:    f000fb8c    ....    BL       QSPI_CmdStructClear ; 0x970
+        0x00000258:    f2401001    @...    MOV      r0,#0x101
+        0x0000025c:    2100        .!      MOVS     r1,#0
+        0x0000025e:    f8ad0004    ....    STRH     r0,[sp,#4]
+        0x00000262:    2001        .       MOVS     r0,#1
+        0x00000264:    f88d1014    ....    STRB     r1,[sp,#0x14]
+        0x00000268:    f44f7180    O..q    MOV      r1,#0x100
+        0x0000026c:    f8ad000c    ....    STRH     r0,[sp,#0xc]
+        0x00000270:    f8ad1016    ....    STRH     r1,[sp,#0x16]
+        0x00000274:    9006        ..      STR      r0,[sp,#0x18]
+        0x00000276:    f04f40f0    O..@    MOV      r0,#0x78000000
+        0x0000027a:    2100        .!      MOVS     r1,#0
+        0x0000027c:    4632        2F      MOV      r2,r6
+        0x0000027e:    9502        ..      STR      r5,[sp,#8]
+        0x00000280:    f000fb80    ....    BL       QSPI_Command ; 0x984
+        0x00000284:    2020                MOVS     r0,#0x20
+        0x00000286:    f6c70000    ....    MOVT     r0,#0x7800
+        0x0000028a:    7004        .p      STRB     r4,[r0,#0]
+        0x0000028c:    f000f87a    ..z.    BL       QSPI_Busy ; 0x384
+        0x00000290:    b128        (.      CBZ      r0,0x29e ; W25N01G_WriteReg + 86
+        0x00000292:    bf00        ..      NOP      
+        0x00000294:    bf00        ..      NOP      
+        0x00000296:    f000f875    ..u.    BL       QSPI_Busy ; 0x384
+        0x0000029a:    2800        .(      CMP      r0,#0
+        0x0000029c:    d1fa        ..      BNE      0x294 ; W25N01G_WriteReg + 76
+        0x0000029e:    b008        ..      ADD      sp,sp,#0x20
+        0x000002a0:    bd70        p.      POP      {r4-r6,pc}
+        0x000002a2:    bf00        ..      NOP      
     W25N01G_ReadJEDEC
-        0x000002a0:    b510        ..      PUSH     {r4,lr}
-        0x000002a2:    b088        ..      SUB      sp,sp,#0x20
-        0x000002a4:    ac01        ..      ADD      r4,sp,#4
-        0x000002a6:    4620         F      MOV      r0,r4
-        0x000002a8:    f000fb62    ..b.    BL       QSPI_CmdStructClear ; 0x970
-        0x000002ac:    f240109f    @...    MOV      r0,#0x19f
-        0x000002b0:    f8ad0004    ....    STRH     r0,[sp,#4]
-        0x000002b4:    2000        .       MOVS     r0,#0
-        0x000002b6:    f88d000c    ....    STRB     r0,[sp,#0xc]
-        0x000002ba:    f88d0014    ....    STRB     r0,[sp,#0x14]
-        0x000002be:    f44f7084    O..p    MOV      r0,#0x108
-        0x000002c2:    f8ad0016    ....    STRH     r0,[sp,#0x16]
-        0x000002c6:    2003        .       MOVS     r0,#3
-        0x000002c8:    9006        ..      STR      r0,[sp,#0x18]
-        0x000002ca:    f04f40f0    O..@    MOV      r0,#0x78000000
-        0x000002ce:    2101        .!      MOVS     r1,#1
-        0x000002d0:    4622        "F      MOV      r2,r4
-        0x000002d2:    f000fb57    ..W.    BL       QSPI_Command ; 0x984
-        0x000002d6:    f000f815    ....    BL       QSPI_FIFOCount ; 0x304
-        0x000002da:    2802        .(      CMP      r0,#2
-        0x000002dc:    d805        ..      BHI      0x2ea ; W25N01G_ReadJEDEC + 74
-        0x000002de:    bf00        ..      NOP      
-        0x000002e0:    bf00        ..      NOP      
-        0x000002e2:    f000f80f    ....    BL       QSPI_FIFOCount ; 0x304
-        0x000002e6:    2803        .(      CMP      r0,#3
-        0x000002e8:    d3fa        ..      BCC      0x2e0 ; W25N01G_ReadJEDEC + 64
-        0x000002ea:    2020                MOVS     r0,#0x20
-        0x000002ec:    f6c70000    ....    MOVT     r0,#0x7800
-        0x000002f0:    7801        .x      LDRB     r1,[r0,#0]
-        0x000002f2:    7802        .x      LDRB     r2,[r0,#0]
-        0x000002f4:    7800        .x      LDRB     r0,[r0,#0]
-        0x000002f6:    0212        ..      LSLS     r2,r2,#8
-        0x000002f8:    ea424101    B..A    ORR      r1,r2,r1,LSL #16
-        0x000002fc:    4408        .D      ADD      r0,r0,r1
-        0x000002fe:    b008        ..      ADD      sp,sp,#0x20
-        0x00000300:    bd10        ..      POP      {r4,pc}
-        0x00000302:    bf00        ..      NOP      
+        0x000002a4:    b510        ..      PUSH     {r4,lr}
+        0x000002a6:    b088        ..      SUB      sp,sp,#0x20
+        0x000002a8:    ac01        ..      ADD      r4,sp,#4
+        0x000002aa:    4620         F      MOV      r0,r4
+        0x000002ac:    f000fb60    ..`.    BL       QSPI_CmdStructClear ; 0x970
+        0x000002b0:    f240109f    @...    MOV      r0,#0x19f
+        0x000002b4:    f8ad0004    ....    STRH     r0,[sp,#4]
+        0x000002b8:    2000        .       MOVS     r0,#0
+        0x000002ba:    f88d000c    ....    STRB     r0,[sp,#0xc]
+        0x000002be:    f88d0014    ....    STRB     r0,[sp,#0x14]
+        0x000002c2:    f44f7084    O..p    MOV      r0,#0x108
+        0x000002c6:    f8ad0016    ....    STRH     r0,[sp,#0x16]
+        0x000002ca:    2003        .       MOVS     r0,#3
+        0x000002cc:    9006        ..      STR      r0,[sp,#0x18]
+        0x000002ce:    f04f40f0    O..@    MOV      r0,#0x78000000
+        0x000002d2:    2101        .!      MOVS     r1,#1
+        0x000002d4:    4622        "F      MOV      r2,r4
+        0x000002d6:    f000fb55    ..U.    BL       QSPI_Command ; 0x984
+        0x000002da:    f000f815    ....    BL       QSPI_FIFOCount ; 0x308
+        0x000002de:    2802        .(      CMP      r0,#2
+        0x000002e0:    d805        ..      BHI      0x2ee ; W25N01G_ReadJEDEC + 74
+        0x000002e2:    bf00        ..      NOP      
+        0x000002e4:    bf00        ..      NOP      
+        0x000002e6:    f000f80f    ....    BL       QSPI_FIFOCount ; 0x308
+        0x000002ea:    2803        .(      CMP      r0,#3
+        0x000002ec:    d3fa        ..      BCC      0x2e4 ; W25N01G_ReadJEDEC + 64
+        0x000002ee:    2020                MOVS     r0,#0x20
+        0x000002f0:    f6c70000    ....    MOVT     r0,#0x7800
+        0x000002f4:    7801        .x      LDRB     r1,[r0,#0]
+        0x000002f6:    7802        .x      LDRB     r2,[r0,#0]
+        0x000002f8:    7800        .x      LDRB     r0,[r0,#0]
+        0x000002fa:    0212        ..      LSLS     r2,r2,#8
+        0x000002fc:    ea424101    B..A    ORR      r1,r2,r1,LSL #16
+        0x00000300:    4408        .D      ADD      r0,r0,r1
+        0x00000302:    b008        ..      ADD      sp,sp,#0x20
+        0x00000304:    bd10        ..      POP      {r4,pc}
+        0x00000306:    bf00        ..      NOP      
     QSPI_FIFOCount
-        0x00000304:    2008        .       MOVS     r0,#8
-        0x00000306:    f6c70000    ....    MOVT     r0,#0x7800
-        0x0000030a:    6800        .h      LDR      r0,[r0,#0]
-        0x0000030c:    f3c02005    ...     UBFX     r0,r0,#8,#6
-        0x00000310:    4770        pG      BX       lr
-        0x00000312:    bf00        ..      NOP      
+        0x00000308:    2008        .       MOVS     r0,#8
+        0x0000030a:    f6c70000    ....    MOVT     r0,#0x7800
+        0x0000030e:    6800        .h      LDR      r0,[r0,#0]
+        0x00000310:    f3c02005    ...     UBFX     r0,r0,#8,#6
+        0x00000314:    4770        pG      BX       lr
+        0x00000316:    bf00        ..      NOP      
     W25N01G_Erase
-        0x00000314:    b570        p.      PUSH     {r4-r6,lr}
-        0x00000316:    b088        ..      SUB      sp,sp,#0x20
-        0x00000318:    ae01        ..      ADD      r6,sp,#4
-        0x0000031a:    4605        .F      MOV      r5,r0
-        0x0000031c:    4630        0F      MOV      r0,r6
-        0x0000031e:    460c        .F      MOV      r4,r1
-        0x00000320:    f000fb26    ..&.    BL       QSPI_CmdStructClear ; 0x970
-        0x00000324:    f44f70ec    O..p    MOV      r0,#0x1d8
-        0x00000328:    f8ad0004    ....    STRH     r0,[sp,#4]
-        0x0000032c:    f2402001    @..     MOV      r0,#0x201
-        0x00000330:    f8ad000c    ....    STRH     r0,[sp,#0xc]
-        0x00000334:    0b28        (.      LSRS     r0,r5,#12
-        0x00000336:    9002        ..      STR      r0,[sp,#8]
+        0x00000318:    b570        p.      PUSH     {r4-r6,lr}
+        0x0000031a:    b088        ..      SUB      sp,sp,#0x20
+        0x0000031c:    ae01        ..      ADD      r6,sp,#4
+        0x0000031e:    4605        .F      MOV      r5,r0
+        0x00000320:    4630        0F      MOV      r0,r6
+        0x00000322:    460c        .F      MOV      r4,r1
+        0x00000324:    f000fb24    ..$.    BL       QSPI_CmdStructClear ; 0x970
+        0x00000328:    f44f70ec    O..p    MOV      r0,#0x1d8
+        0x0000032c:    f8ad0004    ....    STRH     r0,[sp,#4]
+        0x00000330:    f2402001    @..     MOV      r0,#0x201
+        0x00000334:    f8ad000c    ....    STRH     r0,[sp,#0xc]
         0x00000338:    2000        .       MOVS     r0,#0
         0x0000033a:    f88d0014    ....    STRB     r0,[sp,#0x14]
         0x0000033e:    f8ad0016    ....    STRH     r0,[sp,#0x16]
@@ -382,145 +386,145 @@
         0x00000346:    2106        .!      MOVS     r1,#6
         0x00000348:    2200        ."      MOVS     r2,#0
         0x0000034a:    2300        .#      MOVS     r3,#0
-        0x0000034c:    f000fb9e    ....    BL       QSPI_WriteReg ; 0xa8c
-        0x00000350:    f04f40f0    O..@    MOV      r0,#0x78000000
-        0x00000354:    2100        .!      MOVS     r1,#0
-        0x00000356:    4632        2F      MOV      r2,r6
-        0x00000358:    f000fb14    ....    BL       QSPI_Command ; 0x984
-        0x0000035c:    f000f810    ....    BL       QSPI_Busy ; 0x380
-        0x00000360:    b108        ..      CBZ      r0,0x366 ; W25N01G_Erase + 82
-        0x00000362:    bf00        ..      NOP      
-        0x00000364:    e7fa        ..      B        0x35c ; W25N01G_Erase + 72
-        0x00000366:    b144        D.      CBZ      r4,0x37a ; W25N01G_Erase + 102
-        0x00000368:    f000f812    ....    BL       W25N01G_FlashBusy ; 0x390
-        0x0000036c:    b128        (.      CBZ      r0,0x37a ; W25N01G_Erase + 102
-        0x0000036e:    bf00        ..      NOP      
-        0x00000370:    bf00        ..      NOP      
-        0x00000372:    f000f80d    ....    BL       W25N01G_FlashBusy ; 0x390
-        0x00000376:    2800        .(      CMP      r0,#0
-        0x00000378:    d1fa        ..      BNE      0x370 ; W25N01G_Erase + 92
-        0x0000037a:    b008        ..      ADD      sp,sp,#0x20
-        0x0000037c:    bd70        p.      POP      {r4-r6,pc}
-        0x0000037e:    bf00        ..      NOP      
+        0x0000034c:    9502        ..      STR      r5,[sp,#8]
+        0x0000034e:    f000fb9d    ....    BL       QSPI_WriteReg ; 0xa8c
+        0x00000352:    f04f40f0    O..@    MOV      r0,#0x78000000
+        0x00000356:    2100        .!      MOVS     r1,#0
+        0x00000358:    4632        2F      MOV      r2,r6
+        0x0000035a:    f000fb13    ....    BL       QSPI_Command ; 0x984
+        0x0000035e:    bf00        ..      NOP      
+        0x00000360:    f000f810    ....    BL       QSPI_Busy ; 0x384
+        0x00000364:    b108        ..      CBZ      r0,0x36a ; W25N01G_Erase + 82
+        0x00000366:    bf00        ..      NOP      
+        0x00000368:    e7fa        ..      B        0x360 ; W25N01G_Erase + 72
+        0x0000036a:    b144        D.      CBZ      r4,0x37e ; W25N01G_Erase + 102
+        0x0000036c:    f000f812    ....    BL       W25N01G_FlashBusy ; 0x394
+        0x00000370:    b128        (.      CBZ      r0,0x37e ; W25N01G_Erase + 102
+        0x00000372:    bf00        ..      NOP      
+        0x00000374:    bf00        ..      NOP      
+        0x00000376:    f000f80d    ....    BL       W25N01G_FlashBusy ; 0x394
+        0x0000037a:    2800        .(      CMP      r0,#0
+        0x0000037c:    d1fa        ..      BNE      0x374 ; W25N01G_Erase + 92
+        0x0000037e:    b008        ..      ADD      sp,sp,#0x20
+        0x00000380:    bd70        p.      POP      {r4-r6,pc}
+        0x00000382:    bf00        ..      NOP      
     QSPI_Busy
-        0x00000380:    2008        .       MOVS     r0,#8
-        0x00000382:    f6c70000    ....    MOVT     r0,#0x7800
-        0x00000386:    6800        .h      LDR      r0,[r0,#0]
-        0x00000388:    f3c01040    ..@.    UBFX     r0,r0,#5,#1
-        0x0000038c:    4770        pG      BX       lr
-        0x0000038e:    bf00        ..      NOP      
+        0x00000384:    2008        .       MOVS     r0,#8
+        0x00000386:    f6c70000    ....    MOVT     r0,#0x7800
+        0x0000038a:    6800        .h      LDR      r0,[r0,#0]
+        0x0000038c:    f3c01040    ..@.    UBFX     r0,r0,#5,#1
+        0x00000390:    4770        pG      BX       lr
+        0x00000392:    bf00        ..      NOP      
     W25N01G_FlashBusy
-        0x00000390:    b580        ..      PUSH     {r7,lr}
-        0x00000392:    20c0        .       MOVS     r0,#0xc0
-        0x00000394:    f7ffff2a    ..*.    BL       W25N01G_ReadReg ; 0x1ec
-        0x00000398:    f0000001    ....    AND      r0,r0,#1
-        0x0000039c:    bd80        ..      POP      {r7,pc}
-        0x0000039e:    bf00        ..      NOP      
+        0x00000394:    b580        ..      PUSH     {r7,lr}
+        0x00000396:    20c0        .       MOVS     r0,#0xc0
+        0x00000398:    f7ffff2a    ..*.    BL       W25N01G_ReadReg ; 0x1f0
+        0x0000039c:    f0000001    ....    AND      r0,r0,#1
+        0x000003a0:    bd80        ..      POP      {r7,pc}
+        0x000003a2:    bf00        ..      NOP      
     W25N01G_Write_
-        0x000003a0:    e92d41f0    -..A    PUSH     {r4-r8,lr}
-        0x000003a4:    b088        ..      SUB      sp,sp,#0x20
-        0x000003a6:    af01        ..      ADD      r7,sp,#4
-        0x000003a8:    4680        .F      MOV      r8,r0
-        0x000003aa:    4638        8F      MOV      r0,r7
-        0x000003ac:    461e        .F      MOV      r6,r3
-        0x000003ae:    4614        .F      MOV      r4,r2
-        0x000003b0:    460d        .F      MOV      r5,r1
-        0x000003b2:    f000fadd    ....    BL       QSPI_CmdStructClear ; 0x970
-        0x000003b6:    2001        .       MOVS     r0,#1
-        0x000003b8:    2101        .!      MOVS     r1,#1
-        0x000003ba:    2202        ."      MOVS     r2,#2
-        0x000003bc:    2c04        .,      CMP      r4,#4
-        0x000003be:    bf08        ..      IT       EQ
-        0x000003c0:    2103        .!      MOVEQ    r1,#3
+        0x000003a4:    e92d41f0    -..A    PUSH     {r4-r8,lr}
+        0x000003a8:    b088        ..      SUB      sp,sp,#0x20
+        0x000003aa:    af01        ..      ADD      r7,sp,#4
+        0x000003ac:    4680        .F      MOV      r8,r0
+        0x000003ae:    4638        8F      MOV      r0,r7
+        0x000003b0:    461e        .F      MOV      r6,r3
+        0x000003b2:    4614        .F      MOV      r4,r2
+        0x000003b4:    460d        .F      MOV      r5,r1
+        0x000003b6:    f000fadb    ....    BL       QSPI_CmdStructClear ; 0x970
+        0x000003ba:    2001        .       MOVS     r0,#1
+        0x000003bc:    2101        .!      MOVS     r1,#1
+        0x000003be:    2202        ."      MOVS     r2,#2
+        0x000003c0:    2c04        .,      CMP      r4,#4
         0x000003c2:    bf08        ..      IT       EQ
-        0x000003c4:    2232        2"      MOVEQ    r2,#0x32
-        0x000003c6:    f88d0005    ....    STRB     r0,[sp,#5]
-        0x000003ca:    f2401001    @...    MOV      r0,#0x101
-        0x000003ce:    f8ad000c    ....    STRH     r0,[sp,#0xc]
-        0x000003d2:    2000        .       MOVS     r0,#0
-        0x000003d4:    9002        ..      STR      r0,[sp,#8]
-        0x000003d6:    f88d0014    ....    STRB     r0,[sp,#0x14]
-        0x000003da:    f88d0016    ....    STRB     r0,[sp,#0x16]
-        0x000003de:    f44f6000    O..`    MOV      r0,#0x800
-        0x000003e2:    f88d2004    ...     STRB     r2,[sp,#4]
-        0x000003e6:    f88d1017    ....    STRB     r1,[sp,#0x17]
-        0x000003ea:    9006        ..      STR      r0,[sp,#0x18]
-        0x000003ec:    f04f40f0    O..@    MOV      r0,#0x78000000
-        0x000003f0:    2106        .!      MOVS     r1,#6
-        0x000003f2:    2200        ."      MOVS     r2,#0
-        0x000003f4:    2300        .#      MOVS     r3,#0
-        0x000003f6:    f000fb49    ..I.    BL       QSPI_WriteReg ; 0xa8c
-        0x000003fa:    f04f40f0    O..@    MOV      r0,#0x78000000
-        0x000003fe:    2100        .!      MOVS     r1,#0
-        0x00000400:    463a        :F      MOV      r2,r7
-        0x00000402:    f000fabf    ....    BL       QSPI_Command ; 0x984
-        0x00000406:    b346        F.      CBZ      r6,0x45a ; W25N01G_Write_ + 186
-        0x00000408:    2620         &      MOVS     r6,#0x20
-        0x0000040a:    2400        .$      MOVS     r4,#0
-        0x0000040c:    f6c70600    ....    MOVT     r6,#0x7800
-        0x00000410:    e007        ..      B        0x422 ; W25N01G_Write_ + 130
-        0x00000412:    bf00        ..      NOP      
-        0x00000414:    f8550024    U.$.    LDR      r0,[r5,r4,LSL #2]
-        0x00000418:    3401        .4      ADDS     r4,#1
-        0x0000041a:    f5b47f00    ....    CMP      r4,#0x200
-        0x0000041e:    6030        0`      STR      r0,[r6,#0]
-        0x00000420:    d00b        ..      BEQ      0x43a ; W25N01G_Write_ + 154
-        0x00000422:    f000f81d    ....    BL       QSPI_FIFOSpace ; 0x460
-        0x00000426:    2803        .(      CMP      r0,#3
-        0x00000428:    d8f4        ..      BHI      0x414 ; W25N01G_Write_ + 116
-        0x0000042a:    bf00        ..      NOP      
-        0x0000042c:    bf00        ..      NOP      
-        0x0000042e:    f000f817    ....    BL       QSPI_FIFOSpace ; 0x460
-        0x00000432:    2804        .(      CMP      r0,#4
-        0x00000434:    d3fa        ..      BCC      0x42c ; W25N01G_Write_ + 140
-        0x00000436:    e7ed        ..      B        0x414 ; W25N01G_Write_ + 116
-        0x00000438:    bf00        ..      NOP      
-        0x0000043a:    f7ffffa1    ....    BL       QSPI_Busy ; 0x380
-        0x0000043e:    2800        .(      CMP      r0,#0
-        0x00000440:    d1fa        ..      BNE      0x438 ; W25N01G_Write_ + 152
-        0x00000442:    4640        @F      MOV      r0,r8
-        0x00000444:    f000f812    ....    BL       W25N01G_Program_Execute ; 0x46c
-        0x00000448:    f7ffffa2    ....    BL       W25N01G_FlashBusy ; 0x390
-        0x0000044c:    b128        (.      CBZ      r0,0x45a ; W25N01G_Write_ + 186
-        0x0000044e:    bf00        ..      NOP      
-        0x00000450:    bf00        ..      NOP      
-        0x00000452:    f7ffff9d    ....    BL       W25N01G_FlashBusy ; 0x390
-        0x00000456:    2800        .(      CMP      r0,#0
-        0x00000458:    d1fa        ..      BNE      0x450 ; W25N01G_Write_ + 176
-        0x0000045a:    b008        ..      ADD      sp,sp,#0x20
-        0x0000045c:    e8bd81f0    ....    POP      {r4-r8,pc}
+        0x000003c4:    2103        .!      MOVEQ    r1,#3
+        0x000003c6:    bf08        ..      IT       EQ
+        0x000003c8:    2232        2"      MOVEQ    r2,#0x32
+        0x000003ca:    f88d0005    ....    STRB     r0,[sp,#5]
+        0x000003ce:    f2401001    @...    MOV      r0,#0x101
+        0x000003d2:    f8ad000c    ....    STRH     r0,[sp,#0xc]
+        0x000003d6:    2000        .       MOVS     r0,#0
+        0x000003d8:    9002        ..      STR      r0,[sp,#8]
+        0x000003da:    f88d0014    ....    STRB     r0,[sp,#0x14]
+        0x000003de:    f88d0016    ....    STRB     r0,[sp,#0x16]
+        0x000003e2:    f44f6000    O..`    MOV      r0,#0x800
+        0x000003e6:    f88d2004    ...     STRB     r2,[sp,#4]
+        0x000003ea:    f88d1017    ....    STRB     r1,[sp,#0x17]
+        0x000003ee:    9006        ..      STR      r0,[sp,#0x18]
+        0x000003f0:    f04f40f0    O..@    MOV      r0,#0x78000000
+        0x000003f4:    2106        .!      MOVS     r1,#6
+        0x000003f6:    2200        ."      MOVS     r2,#0
+        0x000003f8:    2300        .#      MOVS     r3,#0
+        0x000003fa:    f000fb47    ..G.    BL       QSPI_WriteReg ; 0xa8c
+        0x000003fe:    f04f40f0    O..@    MOV      r0,#0x78000000
+        0x00000402:    2100        .!      MOVS     r1,#0
+        0x00000404:    463a        :F      MOV      r2,r7
+        0x00000406:    f000fabd    ....    BL       QSPI_Command ; 0x984
+        0x0000040a:    b346        F.      CBZ      r6,0x45e ; W25N01G_Write_ + 186
+        0x0000040c:    2620         &      MOVS     r6,#0x20
+        0x0000040e:    2400        .$      MOVS     r4,#0
+        0x00000410:    f6c70600    ....    MOVT     r6,#0x7800
+        0x00000414:    e007        ..      B        0x426 ; W25N01G_Write_ + 130
+        0x00000416:    bf00        ..      NOP      
+        0x00000418:    f8550024    U.$.    LDR      r0,[r5,r4,LSL #2]
+        0x0000041c:    3401        .4      ADDS     r4,#1
+        0x0000041e:    f5b47f00    ....    CMP      r4,#0x200
+        0x00000422:    6030        0`      STR      r0,[r6,#0]
+        0x00000424:    d00b        ..      BEQ      0x43e ; W25N01G_Write_ + 154
+        0x00000426:    f000f81d    ....    BL       QSPI_FIFOSpace ; 0x464
+        0x0000042a:    2803        .(      CMP      r0,#3
+        0x0000042c:    d8f4        ..      BHI      0x418 ; W25N01G_Write_ + 116
+        0x0000042e:    bf00        ..      NOP      
+        0x00000430:    bf00        ..      NOP      
+        0x00000432:    f000f817    ....    BL       QSPI_FIFOSpace ; 0x464
+        0x00000436:    2804        .(      CMP      r0,#4
+        0x00000438:    d3fa        ..      BCC      0x430 ; W25N01G_Write_ + 140
+        0x0000043a:    e7ed        ..      B        0x418 ; W25N01G_Write_ + 116
+        0x0000043c:    bf00        ..      NOP      
+        0x0000043e:    f7ffffa1    ....    BL       QSPI_Busy ; 0x384
+        0x00000442:    2800        .(      CMP      r0,#0
+        0x00000444:    d1fa        ..      BNE      0x43c ; W25N01G_Write_ + 152
+        0x00000446:    4640        @F      MOV      r0,r8
+        0x00000448:    f000f812    ....    BL       W25N01G_Program_Execute ; 0x470
+        0x0000044c:    f7ffffa2    ....    BL       W25N01G_FlashBusy ; 0x394
+        0x00000450:    b128        (.      CBZ      r0,0x45e ; W25N01G_Write_ + 186
+        0x00000452:    bf00        ..      NOP      
+        0x00000454:    bf00        ..      NOP      
+        0x00000456:    f7ffff9d    ....    BL       W25N01G_FlashBusy ; 0x394
+        0x0000045a:    2800        .(      CMP      r0,#0
+        0x0000045c:    d1fa        ..      BNE      0x454 ; W25N01G_Write_ + 176
+        0x0000045e:    b008        ..      ADD      sp,sp,#0x20
+        0x00000460:    e8bd81f0    ....    POP      {r4-r8,pc}
     QSPI_FIFOSpace
-        0x00000460:    b580        ..      PUSH     {r7,lr}
-        0x00000462:    f7ffff4f    ..O.    BL       QSPI_FIFOCount ; 0x304
-        0x00000466:    f1c00010    ....    RSB      r0,r0,#0x10
-        0x0000046a:    bd80        ..      POP      {r7,pc}
+        0x00000464:    b580        ..      PUSH     {r7,lr}
+        0x00000466:    f7ffff4f    ..O.    BL       QSPI_FIFOCount ; 0x308
+        0x0000046a:    f1c00010    ....    RSB      r0,r0,#0x10
+        0x0000046e:    bd80        ..      POP      {r7,pc}
     W25N01G_Program_Execute
-        0x0000046c:    b5b0        ..      PUSH     {r4,r5,r7,lr}
-        0x0000046e:    b088        ..      SUB      sp,sp,#0x20
-        0x00000470:    ad01        ..      ADD      r5,sp,#4
-        0x00000472:    4604        .F      MOV      r4,r0
-        0x00000474:    4628        (F      MOV      r0,r5
-        0x00000476:    f000fa7b    ..{.    BL       QSPI_CmdStructClear ; 0x970
-        0x0000047a:    f44f7088    O..p    MOV      r0,#0x110
-        0x0000047e:    f8ad0004    ....    STRH     r0,[sp,#4]
-        0x00000482:    f2402001    @..     MOV      r0,#0x201
-        0x00000486:    f8ad000c    ....    STRH     r0,[sp,#0xc]
-        0x0000048a:    0b20         .      LSRS     r0,r4,#12
-        0x0000048c:    9002        ..      STR      r0,[sp,#8]
+        0x00000470:    b5b0        ..      PUSH     {r4,r5,r7,lr}
+        0x00000472:    b088        ..      SUB      sp,sp,#0x20
+        0x00000474:    ad01        ..      ADD      r5,sp,#4
+        0x00000476:    4604        .F      MOV      r4,r0
+        0x00000478:    4628        (F      MOV      r0,r5
+        0x0000047a:    f000fa79    ..y.    BL       QSPI_CmdStructClear ; 0x970
+        0x0000047e:    f44f7088    O..p    MOV      r0,#0x110
+        0x00000482:    f8ad0004    ....    STRH     r0,[sp,#4]
+        0x00000486:    f2402001    @..     MOV      r0,#0x201
+        0x0000048a:    f8ad000c    ....    STRH     r0,[sp,#0xc]
         0x0000048e:    2000        .       MOVS     r0,#0
         0x00000490:    f88d0014    ....    STRB     r0,[sp,#0x14]
         0x00000494:    f8ad0016    ....    STRH     r0,[sp,#0x16]
         0x00000498:    f04f40f0    O..@    MOV      r0,#0x78000000
         0x0000049c:    2100        .!      MOVS     r1,#0
         0x0000049e:    462a        *F      MOV      r2,r5
-        0x000004a0:    f000fa70    ..p.    BL       QSPI_Command ; 0x984
-        0x000004a4:    f7ffff6c    ..l.    BL       QSPI_Busy ; 0x380
-        0x000004a8:    b128        (.      CBZ      r0,0x4b6 ; W25N01G_Program_Execute + 74
-        0x000004aa:    bf00        ..      NOP      
+        0x000004a0:    9402        ..      STR      r4,[sp,#8]
+        0x000004a2:    f000fa6f    ..o.    BL       QSPI_Command ; 0x984
+        0x000004a6:    f7ffff6d    ..m.    BL       QSPI_Busy ; 0x384
+        0x000004aa:    b120         .      CBZ      r0,0x4b6 ; W25N01G_Program_Execute + 70
         0x000004ac:    bf00        ..      NOP      
-        0x000004ae:    f7ffff67    ..g.    BL       QSPI_Busy ; 0x380
+        0x000004ae:    f7ffff69    ..i.    BL       QSPI_Busy ; 0x384
         0x000004b2:    2800        .(      CMP      r0,#0
-        0x000004b4:    d1fa        ..      BNE      0x4ac ; W25N01G_Program_Execute + 64
+        0x000004b4:    d1fa        ..      BNE      0x4ac ; W25N01G_Program_Execute + 60
         0x000004b6:    b008        ..      ADD      sp,sp,#0x20
         0x000004b8:    bdb0        ..      POP      {r4,r5,r7,pc}
         0x000004ba:    bf00        ..      NOP      
@@ -538,22 +542,22 @@
         0x000004d6:    f8ad0004    ....    STRH     r0,[sp,#4]
         0x000004da:    f2402001    @..     MOV      r0,#0x201
         0x000004de:    f8ad000c    ....    STRH     r0,[sp,#0xc]
-        0x000004e2:    0b38        8.      LSRS     r0,r7,#12
-        0x000004e4:    9002        ..      STR      r0,[sp,#8]
-        0x000004e6:    2000        .       MOVS     r0,#0
-        0x000004e8:    f88d0014    ....    STRB     r0,[sp,#0x14]
-        0x000004ec:    f8ad0016    ....    STRH     r0,[sp,#0x16]
-        0x000004f0:    f04f40f0    O..@    MOV      r0,#0x78000000
-        0x000004f4:    2100        .!      MOVS     r1,#0
-        0x000004f6:    462a        *F      MOV      r2,r5
-        0x000004f8:    f000fa44    ..D.    BL       QSPI_Command ; 0x984
-        0x000004fc:    f7ffff40    ..@.    BL       QSPI_Busy ; 0x380
+        0x000004e2:    2000        .       MOVS     r0,#0
+        0x000004e4:    f88d0014    ....    STRB     r0,[sp,#0x14]
+        0x000004e8:    f8ad0016    ....    STRH     r0,[sp,#0x16]
+        0x000004ec:    f04f40f0    O..@    MOV      r0,#0x78000000
+        0x000004f0:    2100        .!      MOVS     r1,#0
+        0x000004f2:    462a        *F      MOV      r2,r5
+        0x000004f4:    9702        ..      STR      r7,[sp,#8]
+        0x000004f6:    f000fa45    ..E.    BL       QSPI_Command ; 0x984
+        0x000004fa:    bf00        ..      NOP      
+        0x000004fc:    f7ffff42    ..B.    BL       QSPI_Busy ; 0x384
         0x00000500:    b118        ..      CBZ      r0,0x50a ; W25N01G_Read_ + 78
         0x00000502:    bf00        ..      NOP      
         0x00000504:    e7fa        ..      B        0x4fc ; W25N01G_Read_ + 64
         0x00000506:    bf00        ..      NOP      
         0x00000508:    bf00        ..      NOP      
-        0x0000050a:    f7ffff41    ..A.    BL       W25N01G_FlashBusy ; 0x390
+        0x0000050a:    f7ffff43    ..C.    BL       W25N01G_FlashBusy ; 0x394
         0x0000050e:    2800        .(      CMP      r0,#0
         0x00000510:    d1fa        ..      BNE      0x508 ; W25N01G_Read_ + 76
         0x00000512:    ea481006    H...    ORR      r0,r8,r6,LSL #4
@@ -622,12 +626,12 @@
         0x000005ca:    3501        .5      ADDS     r5,#1
         0x000005cc:    f5b57f00    ....    CMP      r5,#0x200
         0x000005d0:    d00a        ..      BEQ      0x5e8 ; W25N01G_Read_ + 300
-        0x000005d2:    f7fffe97    ....    BL       QSPI_FIFOCount ; 0x304
+        0x000005d2:    f7fffe99    ....    BL       QSPI_FIFOCount ; 0x308
         0x000005d6:    2803        .(      CMP      r0,#3
         0x000005d8:    d8f4        ..      BHI      0x5c4 ; W25N01G_Read_ + 264
         0x000005da:    bf00        ..      NOP      
         0x000005dc:    bf00        ..      NOP      
-        0x000005de:    f7fffe91    ....    BL       QSPI_FIFOCount ; 0x304
+        0x000005de:    f7fffe93    ....    BL       QSPI_FIFOCount ; 0x308
         0x000005e2:    2804        .(      CMP      r0,#4
         0x000005e4:    d3fa        ..      BCC      0x5dc ; W25N01G_Read_ + 288
         0x000005e6:    e7ed        ..      B        0x5c4 ; W25N01G_Read_ + 264
@@ -638,19 +642,19 @@
         0x000005f0:    b510        ..      PUSH     {r4,lr}
         0x000005f2:    4604        .F      MOV      r4,r0
         0x000005f4:    20a0        .       MOVS     r0,#0xa0
-        0x000005f6:    f7fffdf9    ....    BL       W25N01G_ReadReg ; 0x1ec
+        0x000005f6:    f7fffdfb    ....    BL       W25N01G_ReadReg ; 0x1f0
         0x000005fa:    08a1        ..      LSRS     r1,r4,#2
         0x000005fc:    ea4101c4    A...    ORR      r1,r1,r4,LSL #3
         0x00000600:    f0000083    ....    AND      r0,r0,#0x83
         0x00000604:    f001017c    ..|.    AND      r1,r1,#0x7c
         0x00000608:    4401        .D      ADD      r1,r1,r0
         0x0000060a:    20a0        .       MOVS     r0,#0xa0
-        0x0000060c:    f7fffe1a    ....    BL       W25N01G_WriteReg ; 0x244
+        0x0000060c:    f7fffe1c    ....    BL       W25N01G_WriteReg ; 0x248
         0x00000610:    bd10        ..      POP      {r4,pc}
         0x00000612:    bf00        ..      NOP      
     QSPI_FIFOEmpty
         0x00000614:    b580        ..      PUSH     {r7,lr}
-        0x00000616:    f7fffe75    ..u.    BL       QSPI_FIFOCount ; 0x304
+        0x00000616:    f7fffe77    ..w.    BL       QSPI_FIFOCount ; 0x308
         0x0000061a:    fab0f080    ....    CLZ      r0,r0
         0x0000061e:    0940        @.      LSRS     r0,r0,#5
         0x00000620:    bd80        ..      POP      {r7,pc}
@@ -1829,7 +1833,7 @@
         0x00001212:    f7ffff53    ..S.    BL       Flash_Param_at_xMHz ; 0x10bc
         0x00001216:    f645000c    E...    MOV      r0,#0x580c
         0x0000121a:    f2c40004    ....    MOVT     r0,#0x4004
-        0x0000121e:    f2403168    @.h1    MOVW     r1,#0x368
+        0x0000121e:    f240318c    @..1    MOVW     r1,#0x38c
         0x00001222:    f2c00100    ....    MOVT     r1,#0
         0x00001226:    6800        .h      LDR      r0,[r0,#0]
         0x00001228:    4479        yD      ADD      r1,r1,pc
@@ -2155,49 +2159,65 @@
         0x0000158c:    2100        .!      MOVS     r1,#0
         0x0000158e:    6001        .`      STR      r1,[r0,#0]
         0x00001590:    4770        pG      BX       lr
-        0x00001592:    0000        ..      MOVS     r0,r0
+    $t
+    .text
+    __aeabi_memset
+    __aeabi_memset4
+    __aeabi_memset8
+        0x00001592:    b2d2        ..      UXTB     r2,r2
+        0x00001594:    e001        ..      B        0x159a ; __aeabi_memset + 8
+        0x00001596:    f8002b01    ...+    STRB     r2,[r0],#1
+        0x0000159a:    1e49        I.      SUBS     r1,r1,#1
+        0x0000159c:    d2fb        ..      BCS      0x1596 ; __aeabi_memset + 4
+        0x0000159e:    4770        pG      BX       lr
+    __aeabi_memclr
+    __aeabi_memclr4
+    __aeabi_memclr8
+        0x000015a0:    2200        ."      MOVS     r2,#0
+        0x000015a2:    e7f6        ..      B        __aeabi_memset ; 0x1592
+    _memset$wrapper
+        0x000015a4:    b510        ..      PUSH     {r4,lr}
+        0x000015a6:    4613        .F      MOV      r3,r2
+        0x000015a8:    460a        .F      MOV      r2,r1
+        0x000015aa:    4604        .F      MOV      r4,r0
+        0x000015ac:    4619        .F      MOV      r1,r3
+        0x000015ae:    f7fffff0    ....    BL       __aeabi_memset ; 0x1592
+        0x000015b2:    4620         F      MOV      r0,r4
+        0x000015b4:    bd10        ..      POP      {r4,pc}
+        0x000015b6:    0000        ..      MOVS     r0,r0
     $d.realdata
     IAP_Cache_Config
-        0x00001594:    01000621    !...    DCD    16778785
+        0x000015b8:    01000621    !...    DCD    16778785
     IAP_Flash_Erase
-        0x00001598:    01000401    ....    DCD    16778241
+        0x000015bc:    01000401    ....    DCD    16778241
     IAP_Flash_Param
-        0x0000159c:    01000521    !...    DCD    16778529
+        0x000015c0:    01000521    !...    DCD    16778529
     IAP_Flash_ParamTAC
-        0x000015a0:    01000561    a...    DCD    16778593
+        0x000015c4:    01000561    a...    DCD    16778593
     IAP_Flash_Write
-        0x000015a4:    01000481    ....    DCD    16778369
+        0x000015c8:    01000481    ....    DCD    16778369
 
 ** Section #2 'PrgData' (SHT_PROGBITS) [SHF_ALLOC + SHF_WRITE]
     Size   : 12 bytes (alignment 4)
-    Address: 0x000015a8
+    Address: 0x000015cc
 
 
 ** Section #3 'PrgData' (SHT_NOBITS) [SHF_ALLOC + SHF_WRITE]
     Size   : 2052 bytes
-    Address: 0x000015b4
+    Address: 0x000015d8
 
 
 ** Section #4 'DevDscr' (SHT_PROGBITS) [SHF_ALLOC + SHF_EXECINSTR]
     Size   : 4256 bytes (alignment 4)
-    Address: 0x000015b4
+    Address: 0x000015d8
 
     $d.realdata
     FlashDevice
-        0x000015b4:    57530101    ..SW    DCD    1465057537
-        0x000015b8:    3033334d    M330    DCD    808661837
-        0x000015bc:    50535120     QSP    DCD    1347637536
-        0x000015c0:    4e203049    I0 N    DCD    1310732361
-        0x000015c4:    00444e41    AND.    DCD    4476481
-        0x000015c8:    00000000    ....    DCD    0
-        0x000015cc:    00000000    ....    DCD    0
-        0x000015d0:    00000000    ....    DCD    0
-        0x000015d4:    00000000    ....    DCD    0
-        0x000015d8:    00000000    ....    DCD    0
-        0x000015dc:    00000000    ....    DCD    0
-        0x000015e0:    00000000    ....    DCD    0
-        0x000015e4:    00000000    ....    DCD    0
-        0x000015e8:    00000000    ....    DCD    0
+        0x000015d8:    57530101    ..SW    DCD    1465057537
+        0x000015dc:    3033334d    M330    DCD    808661837
+        0x000015e0:    50535120     QSP    DCD    1347637536
+        0x000015e4:    4e203049    I0 N    DCD    1310732361
+        0x000015e8:    00444e41    AND.    DCD    4476481
         0x000015ec:    00000000    ....    DCD    0
         0x000015f0:    00000000    ....    DCD    0
         0x000015f4:    00000000    ....    DCD    0
@@ -2216,27 +2236,27 @@
         0x00001628:    00000000    ....    DCD    0
         0x0000162c:    00000000    ....    DCD    0
         0x00001630:    00000000    ....    DCD    0
-        0x00001634:    00010000    ....    DCD    65536
-        0x00001638:    70000000    ...p    DCD    1879048192
-        0x0000163c:    08000000    ....    DCD    134217728
-        0x00001640:    00000800    ....    DCD    2048
+        0x00001634:    00000000    ....    DCD    0
+        0x00001638:    00000000    ....    DCD    0
+        0x0000163c:    00000000    ....    DCD    0
+        0x00001640:    00000000    ....    DCD    0
         0x00001644:    00000000    ....    DCD    0
-        0x00001648:    000000ff    ....    DCD    255
-        0x0000164c:    000003e8    ....    DCD    1000
-        0x00001650:    000007d0    ....    DCD    2000
-        0x00001654:    00010000    ....    DCD    65536
-        0x00001658:    00000000    ....    DCD    0
-        0x0000165c:    ffffffff    ....    DCD    4294967295
-        0x00001660:    ffffffff    ....    DCD    4294967295
-        0x00001664:    00000000    ....    DCD    0
+        0x00001648:    00000000    ....    DCD    0
+        0x0000164c:    00000000    ....    DCD    0
+        0x00001650:    00000000    ....    DCD    0
+        0x00001654:    00000000    ....    DCD    0
+        0x00001658:    00010000    ....    DCD    65536
+        0x0000165c:    70000000    ...p    DCD    1879048192
+        0x00001660:    08000000    ....    DCD    134217728
+        0x00001664:    00000800    ....    DCD    2048
         0x00001668:    00000000    ....    DCD    0
-        0x0000166c:    00000000    ....    DCD    0
-        0x00001670:    00000000    ....    DCD    0
-        0x00001674:    00000000    ....    DCD    0
-        0x00001678:    00000000    ....    DCD    0
+        0x0000166c:    000000ff    ....    DCD    255
+        0x00001670:    000003e8    ....    DCD    1000
+        0x00001674:    000007d0    ....    DCD    2000
+        0x00001678:    00020000    ....    DCD    131072
         0x0000167c:    00000000    ....    DCD    0
-        0x00001680:    00000000    ....    DCD    0
-        0x00001684:    00000000    ....    DCD    0
+        0x00001680:    ffffffff    ....    DCD    4294967295
+        0x00001684:    ffffffff    ....    DCD    4294967295
         0x00001688:    00000000    ....    DCD    0
         0x0000168c:    00000000    ....    DCD    0
         0x00001690:    00000000    ....    DCD    0
@@ -3248,25 +3268,34 @@
         0x00002648:    00000000    ....    DCD    0
         0x0000264c:    00000000    ....    DCD    0
         0x00002650:    00000000    ....    DCD    0
+        0x00002654:    00000000    ....    DCD    0
+        0x00002658:    00000000    ....    DCD    0
+        0x0000265c:    00000000    ....    DCD    0
+        0x00002660:    00000000    ....    DCD    0
+        0x00002664:    00000000    ....    DCD    0
+        0x00002668:    00000000    ....    DCD    0
+        0x0000266c:    00000000    ....    DCD    0
+        0x00002670:    00000000    ....    DCD    0
+        0x00002674:    00000000    ....    DCD    0
 
 ** Section #5 '.debug_abbrev' (SHT_PROGBITS)
     Size   : 2695 bytes
 
 
 ** Section #6 '.debug_frame' (SHT_PROGBITS)
-    Size   : 1708 bytes
+    Size   : 1820 bytes
 
 
 ** Section #7 '.debug_info' (SHT_PROGBITS)
-    Size   : 12967 bytes
+    Size   : 12992 bytes
 
 
 ** Section #8 '.debug_line' (SHT_PROGBITS)
-    Size   : 5826 bytes
+    Size   : 5844 bytes
 
 
 ** Section #9 '.debug_loc' (SHT_PROGBITS)
-    Size   : 5204 bytes
+    Size   : 5199 bytes
 
 
 ** Section #10 '.debug_str' (SHT_PROGBITS)
@@ -3278,13 +3307,13 @@
 
 
 ** Section #12 '.symtab' (SHT_SYMTAB)
-    Size   : 1616 bytes (alignment 4)
+    Size   : 1792 bytes (alignment 4)
     String table #13 '.strtab'
-    Last local symbol no. 32
+    Last local symbol no. 36
 
 
 ** Section #13 '.strtab' (SHT_STRTAB)
-    Size   : 1356 bytes
+    Size   : 1520 bytes
 
 
 ** Section #14 '.note' (SHT_NOTE)
@@ -3292,7 +3321,7 @@
 
 
 ** Section #15 '.comment' (SHT_PROGBITS)
-    Size   : 540 bytes
+    Size   : 1008 bytes
 
 
 ** Section #16 '.shstrtab' (SHT_STRTAB)
@@ -3300,40 +3329,40 @@
 
 
 address     size       variable name                            type
-0x000015ac  0x4        CyclesPerUs                              uint32_t
+0x000015d0  0x4        CyclesPerUs                              uint32_t
 
 address     size       variable name                            type
-0x000015b0  0x4        SystemCoreClock                          uint32_t
+0x000015d4  0x4        SystemCoreClock                          uint32_t
 
 address     size       variable name                            type
-0x00001594  0x4        IAP_Cache_Config                         const IAP_Cache_Config_t
+0x000015b8  0x4        IAP_Cache_Config                         const IAP_Cache_Config_t
 
 address     size       variable name                            type
-0x00001598  0x4        IAP_Flash_Erase                          const IAP_Flash_Erase_t
+0x000015bc  0x4        IAP_Flash_Erase                          const IAP_Flash_Erase_t
 
 address     size       variable name                            type
-0x0000159c  0x4        IAP_Flash_Param                          const IAP_Flash_Param_t
+0x000015c0  0x4        IAP_Flash_Param                          const IAP_Flash_Param_t
 
 address     size       variable name                            type
-0x000015a0  0x4        IAP_Flash_ParamTAC                       const IAP_Flash_Param_t
+0x000015c4  0x4        IAP_Flash_ParamTAC                       const IAP_Flash_Param_t
 
 address     size       variable name                            type
-0x000015a4  0x4        IAP_Flash_Write                          const IAP_Flash_Write_t
+0x000015c8  0x4        IAP_Flash_Write                          const IAP_Flash_Write_t
 
 address     size       variable name                            type
-0x000015b4  0x1        AddressSize                              uint8_t
+0x000015d8  0x1        AddressSize                              uint8_t
 
 address     size       variable name                            type
-0x000015b4  0x10a0     FlashDevice                              const FlashDevice
-0x000015b4  0x2        FlashDevice.Vers                         unsigned short
-0x000015b6  0x80       FlashDevice.DevName                      array[128] of char
-0x00001636  0x2        FlashDevice.DevType                      unsigned short
-0x00001638  0x4        FlashDevice.DevAdr                       long unsigned int
-0x0000163c  0x4        FlashDevice.szDev                        long unsigned int
-0x00001640  0x4        FlashDevice.szPage                       long unsigned int
-0x00001644  0x4        FlashDevice.Res                          long unsigned int
-0x00001648  0x1      * FlashDevice.valEmpty                     unsigned char
-0x0000164c  0x4        FlashDevice.toProg                       long unsigned int
-0x00001650  0x4        FlashDevice.toErase                      long unsigned int
-0x00001654  0x1000     FlashDevice.sectors                      array[512] of FlashSectors
+0x000015d8  0x10a0     FlashDevice                              const FlashDevice
+0x000015d8  0x2        FlashDevice.Vers                         unsigned short
+0x000015da  0x80       FlashDevice.DevName                      array[128] of char
+0x0000165a  0x2        FlashDevice.DevType                      unsigned short
+0x0000165c  0x4        FlashDevice.DevAdr                       long unsigned int
+0x00001660  0x4        FlashDevice.szDev                        long unsigned int
+0x00001664  0x4        FlashDevice.szPage                       long unsigned int
+0x00001668  0x4        FlashDevice.Res                          long unsigned int
+0x0000166c  0x1      * FlashDevice.valEmpty                     unsigned char
+0x00001670  0x4        FlashDevice.toProg                       long unsigned int
+0x00001674  0x4        FlashDevice.toErase                      long unsigned int
+0x00001678  0x1000     FlashDevice.sectors                      array[512] of FlashSectors
 

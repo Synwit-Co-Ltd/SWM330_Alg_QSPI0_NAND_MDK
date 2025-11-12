@@ -34,6 +34,8 @@ int Init(unsigned long adr, unsigned long clk, unsigned long fnc)
 		SystemInit();
 		
 		W25N01G_Init();
+		
+		W25N01G_FlashProtect(W25N_PROTECT_None);
 	}
 	else if(fnc == 2)
 	{
@@ -73,7 +75,7 @@ int EraseSector(unsigned long adr)
 	
 	adr = adr - 0x70000000;
 	
- 	W25N01G_Erase(adr * 2, 1);
+ 	W25N01G_Erase(adr / W25N_PAGE_SIZE, 1);
 	
  	return 0;
 }
@@ -95,7 +97,12 @@ int ProgramPage(unsigned long adr, unsigned long sz, unsigned char *buf)
 	
 	adr = adr - 0x70000000;
 	
-	W25N01G_Write_4bit(adr * 2, buf);
+	for(int i = sz; i < W25N_PAGE_SIZE; i++)
+	{
+		buf[i] = 0xFF;
+	}
+	
+	W25N01G_Write_4bit(adr / W25N_PAGE_SIZE, buf);
 	
   	return 0;
 }
@@ -119,7 +126,7 @@ unsigned long Verify(unsigned long adr, unsigned long sz, unsigned char *buf)
 	
 	static uint8_t rdbuf[0x800];
 	
-	W25N01G_Read_4bit(adr * 2, rdbuf);
+	W25N01G_Read_4bit(adr / W25N_PAGE_SIZE, rdbuf);
 	
 	for(int i = 0; i < sz; i++)
 		if(rdbuf[i] != buf[i])
@@ -136,7 +143,7 @@ unsigned long Read(unsigned long adr, unsigned long sz, unsigned char *buf)
 	
 	adr = adr - 0x70000000;
 	
-	W25N01G_Read_4bit(adr * 2, buf);
+	W25N01G_Read_4bit(adr / W25N_PAGE_SIZE, buf);
 	
 	return (0x70000000+adr+sz);
 }
