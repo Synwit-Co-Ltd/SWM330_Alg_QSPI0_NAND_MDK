@@ -124,7 +124,7 @@ unsigned long Verify(unsigned long adr, unsigned long sz, unsigned char *buf)
 	
 	adr = adr - 0x70000000;
 	
-	static uint8_t rdbuf[0x800];
+	uint8_t * rdbuf = (uint8_t *)0x20010000;
 	
 	W25N01G_Read_4bit(adr / W25N_PAGE_SIZE, rdbuf);
 	
