@@ -57,35 +57,35 @@
 
     $t.0
     Init
-        0x00000000:    2a01        .*      CMP      r2,#1
-        0x00000002:    d122        ".      BNE      0x4a ; Init + 74
-        0x00000004:    b580        ..      PUSH     {r7,lr}
-        0x00000006:    f3ef8010    ....    MRS      r0,PRIMASK
-        0x0000000a:    b672        r.      CPSID    i
-        0x0000000c:    f001f9cc    ....    BL       switchTo8MHz ; 0x13a8
-        0x00000010:    f2407020    @. p    MOVW     r0,#0x720
-        0x00000014:    f2c40000    ....    MOVT     r0,#0x4000
-        0x00000018:    2155        U!      MOVS     r1,#0x55
-        0x0000001a:    6001        .`      STR      r1,[r0,#0]
-        0x0000001c:    f04f31ff    O..1    MOV      r1,#0xffffffff
-        0x00000020:    6041        A`      STR      r1,[r0,#4]
-        0x00000022:    6081        .`      STR      r1,[r0,#8]
-        0x00000024:    f3bf8f4f    ..O.    DSB      
-        0x00000028:    f3bf8f6f    ..o.    ISB      
-        0x0000002c:    bf00        ..      NOP      
-        0x0000002e:    2100        .!      MOVS     r1,#0
-        0x00000030:    bf00        ..      NOP      
-        0x00000032:    6041        A`      STR      r1,[r0,#4]
-        0x00000034:    6081        .`      STR      r1,[r0,#8]
-        0x00000036:    6001        .`      STR      r1,[r0,#0]
-        0x00000038:    f001f8c4    ....    BL       SystemInit ; 0x11c4
-        0x0000003c:    f000f884    ....    BL       W25N01G_Init ; 0x148
-        0x00000040:    2000        .       MOVS     r0,#0
-        0x00000042:    f000facd    ....    BL       W25N01G_FlashProtect ; 0x5e0
-        0x00000046:    e8bd4080    ...@    POP      {r7,lr}
-        0x0000004a:    2000        .       MOVS     r0,#0
-        0x0000004c:    4770        pG      BX       lr
-        0x0000004e:    bf00        ..      NOP      
+        0x00000000:    1e50        P.      SUBS     r0,r2,#1
+        0x00000002:    2802        .(      CMP      r0,#2
+        0x00000004:    d822        ".      BHI      0x4c ; Init + 76
+        0x00000006:    b580        ..      PUSH     {r7,lr}
+        0x00000008:    f3ef8010    ....    MRS      r0,PRIMASK
+        0x0000000c:    b672        r.      CPSID    i
+        0x0000000e:    f001f9cb    ....    BL       switchTo8MHz ; 0x13a8
+        0x00000012:    f2407020    @. p    MOVW     r0,#0x720
+        0x00000016:    f2c40000    ....    MOVT     r0,#0x4000
+        0x0000001a:    2155        U!      MOVS     r1,#0x55
+        0x0000001c:    6001        .`      STR      r1,[r0,#0]
+        0x0000001e:    f04f31ff    O..1    MOV      r1,#0xffffffff
+        0x00000022:    6041        A`      STR      r1,[r0,#4]
+        0x00000024:    6081        .`      STR      r1,[r0,#8]
+        0x00000026:    f3bf8f4f    ..O.    DSB      
+        0x0000002a:    f3bf8f6f    ..o.    ISB      
+        0x0000002e:    bf00        ..      NOP      
+        0x00000030:    2100        .!      MOVS     r1,#0
+        0x00000032:    bf00        ..      NOP      
+        0x00000034:    6041        A`      STR      r1,[r0,#4]
+        0x00000036:    6081        .`      STR      r1,[r0,#8]
+        0x00000038:    6001        .`      STR      r1,[r0,#0]
+        0x0000003a:    f001f8c3    ....    BL       SystemInit ; 0x11c4
+        0x0000003e:    f000f883    ....    BL       W25N01G_Init ; 0x148
+        0x00000042:    2000        .       MOVS     r0,#0
+        0x00000044:    f000facc    ....    BL       W25N01G_FlashProtect ; 0x5e0
+        0x00000048:    e8bd4080    ...@    POP      {r7,lr}
+        0x0000004c:    2000        .       MOVS     r0,#0
+        0x0000004e:    4770        pG      BX       lr
     UnInit
         0x00000050:    2000        .       MOVS     r0,#0
         0x00000052:    4770        pG      BX       lr

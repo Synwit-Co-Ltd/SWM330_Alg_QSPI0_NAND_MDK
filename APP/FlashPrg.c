@@ -16,7 +16,7 @@ int Init(unsigned long adr, unsigned long clk, unsigned long fnc)
 {
 	QSPI_InitStructure QSPI_initStruct;
 	
-	if(fnc == 1)
+	if((fnc == 1) || (fnc == 2) || (fnc == 3))
 	{
 		__disable_irq();
 		
@@ -37,13 +37,7 @@ int Init(unsigned long adr, unsigned long clk, unsigned long fnc)
 		
 		W25N01G_FlashProtect(W25N_PROTECT_None);
 	}
-	else if(fnc == 2)
-	{
-	}
-	else if(fnc == 3)
-	{
-	}
-
+	
 	return 0;
 }
 
